@@ -1,0 +1,3 @@
+FROM alpine:latest
+RUN apk add vim
+RUN apk add apache2
