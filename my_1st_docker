@@ -23,11 +23,12 @@ EXPOSE 80
 
 CMD apachectl -D FOREGROUND
 
+# This cmd will run and make updates as needed
 RUN apk add update
+
+# These cmds are for setting up and installing Python3.8, as well as python3-pip
 RUN apk add python3.8
 RUN apk add python3-pip
 RUN python3.8 -m pip add auto-sklearn
 RUN python3.8 -m pip add pandas
 RUN ln -s /usr/bin/python3.8 /usr/bin/python
-
-ADD test.py
