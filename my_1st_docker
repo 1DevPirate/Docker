@@ -1,5 +1,9 @@
 FROM alpine:latest
+
+# Installs vim
 RUN apk add vim
+
+#These ENV cmd below will set up the environment for apache
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
 ENV APACHE_LOG_DIR /var/log/apache2
@@ -7,7 +11,23 @@ ENV APACHE_PID_FILE /var/run/apache2/apache2.pid
 ENV APACHE_RUN_DIR /var/run/apache2
 ENV APACHE_LOCK_DIR /var/lock/apache2
 ENV APACHE_LOG_DIR /var/log/apche2
+
+# This will install apache2
 RUN apk add apache2
+
+# Making a copy of this script to the /var/www...etc directory
 COPY . /var/www/html
+
+# Exposing port 80
 EXPOSE 80
+
 CMD apachectl -D FOREGROUND
+
+RUN apk add update
+RUN apk add python3.8
+RUN apk add python3-pip
+RUN python3.8 -m pip add auto-sklearn
+RUN python3.8 -m pip add pandas
+RUN ln -s /usr/bin/python3.8 /usr/bin/python
+
+ADD test.py
